@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Weather App</title>
+    <link rel="icon" type="image/x-icon" href="https://open-meteo.com/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    
+</head>
+<body style="background-size: cover; background-position: center; background-repeat: no-repeat; cursor: url('snowflake.png'), auto; font-family: Arial, Helvetica, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+    <div class="text-center mt-5">
+        <h1 class="mb-1 card p-4">Weather Forecast</h1>
+        <div class="card p-4 shadow-lg" style="max-width: 400px;">
+            <h2 id="location">Cookeville</h2>
+            <i id="weather-icon" class="bi bi-cloud-sun display-1"></i>
+            <h3 id="temperature">--°F</h3>
+            <p>Humidity: <span id="humidity">--%</span></p>
+            <small>Data provided by <a href="https://open-meteo.com" target="_blank">Open Meteo</a></small>
+            <small>Snow icons created by Freepik <a href="https://www.flaticon.com/free-icons/snow" title="snow icons" target="_blank">Flaticon</a></small>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const latitude = 36.1628
+            const longitude = -85.5016
+
+            const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m&temperature_unit=fahrenheit&timezone=America/Chicago`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const temp = data.current.temperature_2m
+                    const humidity = data.current.relative_humidity_2m
+
+                    document.getElementById("temperature").textContent = `${temp}°F`
+                    document.getElementById("humidity").textContent = `${humidity}%`
+
+                    updateWeatherIcon(temp);
+                })
+                .catch(error => console.error("Error fetching weather data:", error))
+
+            function updateWeatherIcon(temp) {
+                let bgImage = ''
+
+                const iconElement = document.getElementById("weather-icon")
+                if (temp > 85) {
+                    iconElement.className = "bi bi-brightness-high-fill"; // Sunny
+                    bgImage = 'sunshine.gif'
+                } else if (temp > 60) {
+                    iconElement.className = "bi bi-cloud-sun"; // Partly cloudy
+                    bgImage = 'cloudy.gif'
+                } else if (temp < 30){
+                    iconElement.className = "bi bi-snow"; // Snowy
+                    bgImage = 'snow_time.gif'
+                } else {
+                    iconElement.className = "bi bi-cloud-rain"; // Rainy
+                    bgImage = 'rain.gif'
+                }
+                
+                document.body.style.backgroundImage = `url('${bgImage}')`
+            }
+
+            updateWeatherIcon(temp)
+        })
+    </script>
+</body>
+</html>
