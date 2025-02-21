@@ -16,11 +16,11 @@
         <h1 class="mb-1 card p-3" style="font-family: cursive;">Weather Forecast</h1>
         <div class="card p-4" style="max-width: 400px;">
             <h2 id="location" aria-label="location">Cookeville</h2>
-            <i id="weather-icon" class="bi bi-cloud-sun display-1" aria-label="weather icon showing current condition"></i>
+            <i id="weather-icon" class="bi bi-cloud-sun display-1" aria-label="weather icon showing current weather condition"></i>
             <h3 class="bi bi-thermometer" id="temperature">--°F</h3>
         <p>
             <span id="text">Humidity: </span>
-            <i style="color: blue;" class="bi bi-droplet-fill" aria-label="shows the current humdity"></i>
+            <i style="color: blue;" class="bi bi-droplet-fill" aria-label="weather icon showing current humdity"></i>
             <span id="humidity"></span>
         </p>
             <small>Data provided by <a href="https://open-meteo.com" target="_blank">Open Meteo</a></small>
@@ -37,7 +37,7 @@
             const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m&temperature_unit=fahrenheit&timezone=America/Chicago`;
 
             fetch(apiUrl)
-                .then(response => response.json()) // Convert APII response to JSON
+                .then(response => response.json()) // Convert API response to JSON
                 .then(data => {
                     const temp = data.current.temperature_2m // Get temperature
                     const humidity = data.current.relative_humidity_2m // Get humidity
