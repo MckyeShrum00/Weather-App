@@ -13,12 +13,16 @@
 </head>
 <body style="background-size: cover; background-position: center; background-repeat: no-repeat; cursor: url('snowflake.png'), auto; font-family: Arial, Helvetica, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
     <div class="text-center mt-5">
-        <h1 class="mb-1 card p-4">Weather Forecast</h1>
+        <h1 class="mb-1 card p-4" style="font-family: cursive;">Weather Forecast</h1>
         <div class="card p-4 shadow-lg" style="max-width: 400px;">
             <h2 id="location">Cookeville</h2>
             <i id="weather-icon" class="bi bi-cloud-sun display-1"></i>
-            <h3 id="temperature">--°F</h3>
-            <p>Humidity: <span id="humidity">--%</span></p>
+            <h3 class="bi bi-thermometer" id="temperature">--°F</h3>
+        <p>
+            <span id="text">Humidity: </span>
+            <i style="color: blue;" class="bi bi-droplet-fill"></i>
+            <span id="humidity"></span>
+        </p>
             <small>Data provided by <a href="https://open-meteo.com" target="_blank">Open Meteo</a></small>
             <small>Snow icons created by Freepik <a href="https://www.flaticon.com/free-icons/snow" title="snow icons" target="_blank">Flaticon</a></small>
         </div>
@@ -38,7 +42,7 @@
                     const humidity = data.current.relative_humidity_2m
 
                     document.getElementById("temperature").textContent = `${temp}°F`
-                    document.getElementById("humidity").textContent = `${humidity}%`
+                    document.getElementById("humidity").textContent = ` ${humidity}%`
 
                     updateWeatherIcon(temp);
                 })
