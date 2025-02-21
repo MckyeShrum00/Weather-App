@@ -33,17 +33,20 @@
             const latitude = 36.1628
             const longitude = -85.5016
 
+            // API URL to fetch weather data
             const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m&temperature_unit=fahrenheit&timezone=America/Chicago`;
 
             fetch(apiUrl)
-                .then(response => response.json())
+                .then(response => response.json()) // Convert APII response to JSON
                 .then(data => {
-                    const temp = data.current.temperature_2m
-                    const humidity = data.current.relative_humidity_2m
+                    const temp = data.current.temperature_2m // Get temperature
+                    const humidity = data.current.relative_humidity_2m // Get humidity
 
+                    // Update temperature and humidity
                     document.getElementById("temperature").textContent = `${temp}°F`
                     document.getElementById("humidity").textContent = ` ${humidity}%`
 
+                    // Change background and icon based on temperature
                     updateWeatherIcon(temp);
                 })
                 .catch(error => console.error("Error fetching weather data:", error))
@@ -52,24 +55,25 @@
                 let bgImage = ''
 
                 const iconElement = document.getElementById("weather-icon")
+
+                // Chooses weather icon and background based on temperature
                 if (temp > 85) {
                     iconElement.className = "bi bi-brightness-high-fill"; // Sunny
-                    bgImage = 'images/sunshine.gif' // Switches background to Sunny
+                    bgImage = 'images/sunshine.gif' // Sunny background
                 } else if (temp > 60) {
                     iconElement.className = "bi bi-cloud-sun"; // Partly cloudy
-                    bgImage = 'images/cloudy.gif' // Switches background to Partly cloudy
+                    bgImage = 'images/cloudy.gif' // Partly cloudy background
                 } else if (temp < 30){
                     iconElement.className = "bi bi-snow"; // Snowy
-                    bgImage = 'images/snow_time.gif' // Switches background to Snowy
+                    bgImage = 'images/snow_time.gif' // Snowy background
                 } else {
                     iconElement.className = "bi bi-cloud-rain"; // Rainy
-                    bgImage = 'images/rain.gif' // Switches background to Rainy
+                    bgImage = 'images/rain.gif' // Rainy background
                 }
                 
+                // Display the background image
                 document.body.style.backgroundImage = `url('${bgImage}')`
             }
-
-            updateWeatherIcon(temp)
         })
     </script>
 </body>
